@@ -4,13 +4,22 @@ import (
 	"context"
 	"log"
 
+	"github.com/North-al/grpc_demo/client/auth"
 	"github.com/North-al/grpc_demo/internal/service"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 )
 
 func main() {
-	c, err := grpc.NewClient("localhost:8080", grpc.WithTransportCredentials(insecure.NewCredentials()))
+
+	token := &auth.Auth{Token: "Bearer token"}
+
+	c, err := grpc.NewClient(
+		"localhost:8080",
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithPerRPCCredentials(token),
+	)
+
 	if err != nil {
 		log.Fatalf("grpc.NewClient err: %v", err)
 	}
