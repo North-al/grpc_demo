@@ -7,5 +7,23 @@ option go_package = "./service";
 message User {
   string username = 1;
   int32 age = 2;
+
+  // 测试可选字段和
+  optional string email = 3;
+
+  // 测试重复字段
+  repeated string tags = 4;
 }
 
+message Person {
+  message Address {
+    string city = 1;
+    string street = 2;
+  }
+
+  repeated Address addresses = 1;
+}
+
+message PersonAddress {
+  Person.Address address = 1;
+}
